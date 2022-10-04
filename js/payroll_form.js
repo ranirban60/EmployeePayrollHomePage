@@ -53,11 +53,12 @@ window.addEventListener('DOMContentLoaded', (_event) => {
   });
 
 });
-const save = () => {
+const save = (_event) => {
   try {
     let employeePayrollData = createEmployeePayroll();
     createAndUpdateStorage(employeePayrollData);
-    alert("Added Succesfully")
+    window.location.replace(site_properties.home_page);
+
   } catch (e) {
     return;
   }
@@ -67,7 +68,6 @@ const createEmployeePayroll = () => {
   let employeePayrollData = new EmployeePayrollData();
   try {
     employeePayrollData.name = document.querySelector('#name').value;
-    createAndUpdateStorage(employeePayrollData);
   } catch (e) {
     setTextValue('.name-error', e);
     throw e;
@@ -94,32 +94,32 @@ const getSelectedValues = (propertyValue) => {
   return selItems;
 }
 
-function createAndUpdateStorage(employeePayrollData){
+function createAndUpdateStorage(employeePayrollData) {
 
   let employeePayrollList = JSON.parse(localStorage.getItem('EmployeePayrollList'));
 
-  if(employeePayrollList != undefined) {
+  if (employeePayrollList != undefined) {
     employeePayrollList.push(employeePayrollData);
-  }else {
-    employeePayrollList = [employeePayrollData]
+  } else {
+    employeePayrollList = [employeePayrollData];
   }
   alert(employeePayrollList.toString());
-  localStorage.setItem('EmployeePayrollList', JSON.stringify(employeePayrollList))
+  localStorage.setItem('EmployeePayrollList', JSON.stringify(employeePayrollList));
 }
 
 const resetForm = () => {
-  setValue('#name','');
-  setTextValue('.name-error','');
+  setValue('#name', '');
+  setTextValue('.name-error', '');
   unsetSelectedValues('[name=profile]');
   unsetSelectedValues('[name=gender]');
   unsetSelectedValues('[name=department]');
-  setValue('#salary','');
-  setTextValue('.salary-output',400000);
-  setValue('#notes','');
-  setValue('#day','1');
-  setValue('#month','January');
-  setValue('#year','2020');
-  setTextValue('.date-error','');
+  setValue('#salary', '');
+  setTextValue('.salary-output', 400000);
+  setValue('#notes', '');
+  setValue('#day', '1');
+  setValue('#month', 'January');
+  setValue('#year', '2020');
+  setTextValue('.date-error', '');
 }
 
 const unsetSelectedValues = (propertyValue) => {
@@ -138,4 +138,3 @@ const setValue = (id, value) => {
   const element = document.querySelector(id);
   element.value = value;
 }
-
